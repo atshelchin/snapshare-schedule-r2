@@ -1,4 +1,10 @@
 import { S3Client, ListObjectsV2Command, DeleteObjectsCommand } from '@aws-sdk/client-s3';
+import { DOMParser } from '@xmldom/xmldom';
+
+// Polyfill DOMParser for Cloudflare Workers
+if (typeof globalThis.DOMParser === 'undefined') {
+	globalThis.DOMParser = DOMParser;
+}
 
 export interface Env {
 	ACCESS_KEY_ID: string;
