@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "snapshare-schedule",
+	"name": "snapshare-schedule-r2",
 	"compatibility_flags": ["nodejs_compat"],
 	"compatibility_date": "2025-08-05",
 	"main": "src/index.ts",
@@ -13,9 +13,8 @@
 	},
 	"triggers": {
 		"crons": [
-			// At every 5th minute https://crontab.guru/#*/5_*_*_*_*
-			"*/5 * * * *",
-			"*  * * * *"
+			// At every minute  https://crontab.guru/#*_*_*_*_*
+			"* * * * *"
 		]
 	}
 	/**
