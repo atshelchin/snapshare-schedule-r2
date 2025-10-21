@@ -1,9 +1,32 @@
 import { S3Client, ListObjectsV2Command, DeleteObjectsCommand } from '@aws-sdk/client-s3';
-import { DOMParser } from '@xmldom/xmldom';
+import { DOMParser, DOMImplementation, XMLSerializer } from '@xmldom/xmldom';
 
-// Polyfill DOMParser for Cloudflare Workers
+// Polyfill DOM APIs for Cloudflare Workers
 if (typeof globalThis.DOMParser === 'undefined') {
-	globalThis.DOMParser = DOMParser;
+	globalThis.DOMParser = DOMParser as any;
+}
+if (typeof globalThis.DOMImplementation === 'undefined') {
+	globalThis.DOMImplementation = DOMImplementation as any;
+}
+if (typeof globalThis.XMLSerializer === 'undefined') {
+	globalThis.XMLSerializer = XMLSerializer as any;
+}
+// Add Node constants that AWS SDK needs
+if (typeof globalThis.Node === 'undefined') {
+	globalThis.Node = {
+		ELEMENT_NODE: 1,
+		ATTRIBUTE_NODE: 2,
+		TEXT_NODE: 3,
+		CDATA_SECTION_NODE: 4,
+		ENTITY_REFERENCE_NODE: 5,
+		ENTITY_NODE: 6,
+		PROCESSING_INSTRUCTION_NODE: 7,
+		COMMENT_NODE: 8,
+		DOCUMENT_NODE: 9,
+		DOCUMENT_TYPE_NODE: 10,
+		DOCUMENT_FRAGMENT_NODE: 11,
+		NOTATION_NODE: 12
+	} as any;
 }
 
 export interface Env {
