@@ -37,12 +37,15 @@ export default {
 				}
 			}
 		}
+
+		console.log('keys length=>', keys.length);
 		const deleteCommand = new DeleteObjectsCommand({
 			Bucket: env.BUCKET,
 			Delete: {
 				Objects: keys.slice(0, 1000)
 			}
 		});
+
 		await S3.send(deleteCommand);
 	}
 };
